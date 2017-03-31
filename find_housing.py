@@ -40,7 +40,8 @@ def get_fields(table):
 
 def main():
 	destination = "Stefano- Franscini-Platz 5, 8049 Zurich, Switzerland"
-	my_end_date = datetime.date(datetime(2017, 06, 25))
+	my_end_date = datetime.date(datetime(2017, 8, 31))
+	my_start_date = datetime.date(datetime(2017, 6, 25))
 	print destination
 	print my_end_date
 
@@ -67,7 +68,7 @@ def main():
 				counter = counter + 1		
 	
 	parsedListings = [parse(listing) for listing in listings]
-	parsedListings = [listing for listing in parsedListings if listing.end_date > my_end_date]
+	parsedListings = [listing for listing in parsedListings if listing.end_date >= my_end_date and listing.start_date <= my_start_date]
 
 	addresses = [(listing.address + "," + listing.zip) for listing in parsedListings]
 	gmaps = googlemaps.Client(key='AIzaSyAKVx1f7-Rz8h5ZniCB5rILbbMxC27aFqY')	
