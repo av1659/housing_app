@@ -40,6 +40,9 @@ def get_fields(table):
 
 def main():
 	destination = "Stefano- Franscini-Platz 5, 8049 Zurich, Switzerland"
+	my_end_date = datetime.date(datetime(2017, 06, 25))
+	print destination
+	print my_end_date
 
 	session = requests.session()
 
@@ -64,6 +67,8 @@ def main():
 				counter = counter + 1		
 	
 	parsedListings = [parse(listing) for listing in listings]
+	parsedListings = [listing for listing in parsedListings if listing.end_date > my_end_date]
+
 	addresses = [(listing.address + "," + listing.zip) for listing in parsedListings]
 	gmaps = googlemaps.Client(key='AIzaSyAKVx1f7-Rz8h5ZniCB5rILbbMxC27aFqY')	
 	matrix = gmaps.distance_matrix(addresses, destination, \
@@ -75,14 +80,7 @@ def main():
 	dist_list.sort(key=lambda tup: tup[2])
 	for x in dist_list:
 		print x[1] + "-\t" + x[0]
-		#print get_distances(listing.address + "," + listing.zip, destination)[0]
 
-
-
-# for  div in doc.findAll('div', { "class" : "inserat" }):
-# 	for child in div.children:
-# 		print div.contents
-# 		print "\n"
 
 if __name__ == '__main__':
 	main()
